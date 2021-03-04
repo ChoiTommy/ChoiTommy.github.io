@@ -2,7 +2,7 @@
 <html>
     <head></head>
     <body>
-        <h1 class="center">Gesture detector</h1>
+        <h1 class="center">Posture detector</h1>
         <div class="center">
             <button id="init-button" type="button" onclick="init()">Start</button>
         </div>
@@ -75,7 +75,7 @@
                 if (prediction[1].probability.toFixed(2) > 0.9) {
                     if (time === null){
                         time = + new Date();
-                    } else if ((+ new Date() - time) > 5000){
+                    } else if ((+ new Date() - time) > 5000){ // only show the message if bad postures are detected for over 5s
                         document.getElementById("result").textContent = "Bad posture detected!!!!!!"
                     }
                 } else {
@@ -99,7 +99,7 @@
             }
         </script>
         <footer>
-            <div class="center">Created by Tommy Choi and Ye Yimeng for AIfinity hackathon</div>
+            <div class="center">Created by Tommy Choi and Ye Yimeng for 2021 AIfinity hackathon</div>
         </footer>
     </body>
 </html>
