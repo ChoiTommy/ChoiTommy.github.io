@@ -17,7 +17,7 @@
     "react-dom": "18.2.0",
     "@expo/webpack-config": "^18.0.1",
     "react-native-paper": "4.9.2",
-    "expo-constants": "~14.0.2"
+    "expo-constants": "~14.0.2",
     "@expo/vector-icons": "^13.0.0"
   },
   "devDependencies": {
