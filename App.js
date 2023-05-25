@@ -1,102 +1,99 @@
-import React, { useState } from "react";
-import { Pressable, Button, View, StyleSheet } from "react-native";
-import { AppBar, HStack, IconButton, Provider, Surface, Stack, Snackbar } from "@react-native-material/core";
-import { StatusBar } from "expo-status-bar"
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import * as React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
 
-import DialogBox from "./components/DialogBox";
-
-const App = () => {
-  
-  // GitHub Dialog
-  const [githubDialogVisible, setGithubDialogVisible] = useState(false);
-  const [loveSnackbarVisible, setLoveSnackbarVisible] = useState(false);
+// You can import from local files
+// import AssetExample from './components/AssetExample';
 
 
-  const onGithubDialogDismiss = () => {
-    setGithubDialogVisible(false);
-  }
-  const onGithubDialogPositive = () => {
-    setGithubDialogVisible(false);
+// or any pure javascript modules available in npm
+import { Card, Appbar, Snackbar, FAB } from 'react-native-paper';
+
+export default function App() {
+
+  // Snackbar
+  const [heartSnackbarVisible, setHeartSnackbarVisible] = React.useState(false);
+  const onToggleHeartSnackBar = () => setHeartSnackbarVisible(!heartSnackbarVisible);
+  const onDismissHeartSnackBar = () => setHeartSnackbarVisible(false);
+
+  const openGHLink = () => {
     let link = document.createElement('a');
     link.href = "https://github.com/ChoiTommy/";
     link.click();
   }
-  const onGithubDialogNegative = () => {
-    setGithubDialogVisible(false);
-  }
-  
-  return (
-    <>
-      <AppBar
-        title="Tommy Choi"
-        color="pink"
-        tintColor="red"
-        leading={props => (
-          <IconButton 
-            icon={props => <Icon name="menu" {...props} />}
-            onPress={() => alert("To be implemented...")}
-            {...props} 
-          />
-        )}
-        trailing={props => (
-          <HStack>
-            <IconButton
-              icon={props => <Icon name="heart" {...props} />}
-              onPress={() => setLoveSnackbarVisible(true)}
-              {...props}
-            />
-            <IconButton
-              icon={props => <Icon name="github" {...props} />}
-              onPress={() => setGithubDialogVisible(true)}
-              {...props}
-            />
-          </HStack>
-        )}
-      />
 
-      <Stack fill center spacing={4}>
-        <Surface
-          elevation={6}
-          category="medium"
-          style={{ width: 70, height: 70 }}
-        />
-        <Surface
-          elevation={6}
-          category="medium"
-          style={{ width: 70, height: 70 }}
-        />
-        <Surface
-          elevation={6}
-          category="medium"
-          style={{ width: 70, height: 70 }}
-        />
-      </Stack>
-    
-      <DialogBox
-        visibility={githubDialogVisible}
-        headerText="My GitHub homepage"
-        contentText="Go to my GitHub page?"
-        onDismiss={() => onGithubDialogDismiss()}
-        onPressPositive={() => onGithubDialogPositive()}
-        onPressNegative={() => onGithubDialogNegative()}
-      />
+  const openMyPageLink = () => {
+    let link = document.createElement('a');
+    link.href = "https://choitommy.github.io";
+    link.click();
+  }
+
+  return (
+    <View style={styles.container}>
+
+      <Appbar.Header>
+        <Appbar.Content title="Tommy Choi" />
+        <Appbar.Action icon="heart" onPress={() => onToggleHeartSnackBar()} />
+        <Appbar.Action icon="github" onPress={() => openGHLink()} />
+      </Appbar.Header>
+
+      <Text style={styles.paragraph}>
+        Hey you, welcome to my homepage/Android app/iOS app/PWA app!
+      </Text>
+
+      <Card mode="elevated" elevation={3} style={styles.card}>
+        <Text>
+          Memememememememmememe
+          
+          mmemememememe
+          
+          It's memememememememe
+        </Text>
+      </Card>
 
       <Snackbar
-        visibility={loveSnackbarVisible}
-        message="Glad you love it :') I won't go away to stay with u"
-        style={{ position: "absolute", start: 16, end: 16, bottom: 16 }}
+        visible={heartSnackbarVisible}
+        onDismiss={() => onDismissHeartSnackBar()}
+        action={{
+          label: 'Love it',
+          onPress: () => {
+            onDismissHeartSnackBar();
+          },
+        }}>
+        Glad u like it :')
+      </Snackbar>
+
+      <FAB
+        icon="web"
+        style={styles.fab}
+        onPress={() => openMyPageLink()}
       />
 
-    </>
+    </View>
   );
 }
 
-const AppProvider = () => (
-  <Provider>
-    <App />
-  </Provider>
-);
-
-
-export default AppProvider;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  card: {
+    padding: 24,
+    borderRadius: 8,
+    margin: 12
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+});
